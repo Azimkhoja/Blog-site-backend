@@ -1,0 +1,15 @@
+{
+  "port": 8080,
+  "db_name": "adminlar",
+  "db_password": "yangiParol",
+  "db_port": 5432,
+  "db_host": "localhost",
+  "db_username": "postgres",
+  "crypto_password": "sekretniy",
+  "access_time": "30m",
+  "refresh_time": "10d",
+  "access_key": "mineAccessKey",
+  "refresh_key": "mineRefreshKey",
+  "cookie_time": 2592000000,
+  "iv": "09012ooo"
+}
