@@ -3,7 +3,7 @@ const Category = require("../models/Category.model");
 const createCategory = async (req, res) => {
   try {
     const category = await Category.create(req.body)
-    res.send({status: 201, message: "category created successfully"})
+    res.send({status: 201, message: "category created successfully", id: category.id})
   } catch (error) {
     console.log(error);
   }

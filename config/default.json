@@ -1,5 +1,5 @@
 {
-  "port": 8080,
+  "port": 8088,
   "db_name": "adminlar",
   "db_password": "yangiParol",
   "db_port": 5432,
