@@ -6,7 +6,7 @@ const {
   editPost,
 } = require("../controller/post.controller");
 
-router.post("/post", createPost);
+router.post("/post/add", createPost);
 router.get("/post", getAllPost);
 router.get("/post/:id", getPost);
 router.put("/post/:id", editPost);

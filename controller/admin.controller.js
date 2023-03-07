@@ -76,7 +76,13 @@ const loginAdmin = async (req, res) => {
 
 const getAdmin = async (req, res) => {
   try {
-    console.log("Admin created");
+    const admin = await Admin.findOne({ where: { id: req.params.id } });
+
+    console.log(admin);
+    if (!admin) {
+      return res.send({ status: 404, message: "not found" });
+    }
+    res.send({ status: 200, admin });
   } catch (error) {
     console.log(error);
   }
@@ -85,10 +91,10 @@ const getAdmin = async (req, res) => {
 const getAllAdmin = async (req, res) => {
   try {
     const admins = await Admin.findAll();
-    if(admins.length == 0) {
-      return res.send({status: 404, message:"No admin found"})
+    if (admins.length == 0) {
+      return res.send({ status: 404, message: "No admin found" });
     }
-    res.send({status: 200, admins})
+    res.send({ status: 200, admins });
   } catch (error) {
     console.log(error);
   }
@@ -96,13 +102,22 @@ const getAllAdmin = async (req, res) => {
 
 const editAdmin = async (req, res) => {
   try {
-    let updateAdmin = await Admin.update(req.body, {where: {id: req.params.id}})
-    res.send({status: 200, data: updateAdmin, message: "Seccessfully updated"})
+    console.log(Object.values(req.body).length  );
+    if(Object.keys(req.body).length == 0){
+      return res.send({ status: 400, message: "data not entered" });
+    }
+    let updateAdmin = await Admin.update(req.body, {
+      where: { id: req.params.id },
+    });
+    res.send({  
+      status: 200,
+      data: updateAdmin,
+      message: "Seccessfully updated",
+    });
   } catch (error) {
     console.log(error);
   }
 };
-
 
 module.exports = {
   createAdmin,

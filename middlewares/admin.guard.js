@@ -14,7 +14,7 @@ module.exports = async function (req, res, next) {
     const { id } = await jwt.verifyAccess(token);
     const user = await User.findOne({ where: { id: id } });
     if (!user) {
-      return res.send({ status: 403, message: "you have no access to this" });
+      return res.send({ status: 403, message: "you have no access to do this action" });
     }
     req.body.user_id = id
     next();
