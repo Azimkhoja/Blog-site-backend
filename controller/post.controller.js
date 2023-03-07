@@ -50,7 +50,7 @@ const getAllPost = async (req, res) => {
     if(allPost.length === 0){
       return res.send({status: 404, message:"posts not found" })
     }
-    res.send({status: 200, post})
+    res.send({status: 200, allPost})
   } catch (error) {
     console.log(error);
   }

@@ -10,6 +10,8 @@ const routes = require('./router/index')
 const app = express()
 const PORT = config.get("port") || 5000
 
+// port 8080 dan 8088 ga almashtirildi 
+
 app.use(fileUpload());
 app.use(cors())
 app.use(bodyParser.json())

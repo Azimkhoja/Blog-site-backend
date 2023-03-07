@@ -20,6 +20,7 @@ const createAdmin = async (req, res) => {
       role_id,
     });
     const payload = {
+      role: admin.role_id,
       username: admin.username,
       id: admin.id,
     };
@@ -55,6 +56,7 @@ const loginAdmin = async (req, res) => {
     }
     await Admin.update({ status: true }, { where: { id: admin.id } });
     const payload = {
+      role: admin.role_id,
       username: admin.username,
       id: admin.id,
     };
@@ -68,6 +70,7 @@ const loginAdmin = async (req, res) => {
       message: "Successful login",
       access_token,
       role_id: admin.role_id,
+      username : admin.username
     });
   } catch (error) {
     console.log(error.message);

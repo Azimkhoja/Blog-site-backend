@@ -2,8 +2,14 @@ const Category = require("../models/Category.model");
 
 const createCategory = async (req, res) => {
   try {
+    const check = await Category.findOne({where: {name: req.body.name}})
+    if(check){
+      return res.send({status: 400, message:"this category is already exists"})
+    }
     const category = await Category.create(req.body)
+    
     res.send({status: 201, message: "category created successfully", id: category.id})
+
   } catch (error) {
     console.log(error);
   }
@@ -34,7 +40,7 @@ const getAllCategory = async (req, res) => {
 };
 const editCategory = async (req, res) => {
   try {
-    if(Object.keys(category).length == 0) {
+    if(Object.keys(req.body).length == 0) {
       return res.send({status: 400, message: "category not entered"})
     }
     let category = Category.update(req.body, {where: {id: req.params.id}})
