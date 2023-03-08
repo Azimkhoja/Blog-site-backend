@@ -32,17 +32,25 @@ class JwtService {
     return jwt.verify(token, this.refreshKey, {});
   }
 
+//   generateTokens(payload){
+//     const accessToken = jwt.sign(payload, this.accessKey, {
+//       expiresIn: this.accessTime
+//     })
+//     const refreshToken = jwt.sign(payload, this.refreshTime, {
+//       expiresIn: this.refreshTime
+//     })
+//     return {
+//       accessToken,
+//       refreshToken
+//     }
+//   }
+// }
   generateTokens(payload){
     const accessToken = jwt.sign(payload, this.accessKey, {
       expiresIn: this.accessTime
     })
-    // const refreshToken = jwt.sign(payload, this.refreshTime, {
-    //   expiresIn: this.refreshTime
-    // })
-    return {
-      accessToken,
-      // refreshToken
-    }
+    
+    return accessToken
   }
 }
 /**

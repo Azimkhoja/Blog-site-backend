@@ -42,13 +42,14 @@ const createAdmin = async (req, res) => {
 
 const loginAdmin = async (req, res) => {
   try {
-    let { username, hash_password } = req.body;
+    let { username,password } = req.body;
     let admin = await Admin.findOne({ where: { username: username } });
+    console.log(!admin);
     if (!admin) {
-      return res.send({ status: 404, message: "you are not registered" });
+      return res.send({ status: 405, message: "you are not registered" });
     }
     const validPassword = bcrypt.compareSync(
-      hash_password,
+      password,
       admin.hash_password
     );
     if (!validPassword) {
@@ -69,11 +70,11 @@ const loginAdmin = async (req, res) => {
       status: 200,
       message: "Successful login",
       access_token,
-      role_id: admin.role_id,
+      role: admin.role_id,
       username : admin.username
     });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 };
 
