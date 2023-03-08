@@ -9,7 +9,7 @@ const createAdmin = async (req, res) => {
     let admin = await Admin.findOne({ where: { username: username } });
 
     if (admin) {
-      return res.send({ message: "this admin already exists" });
+      return res.send({ message: "this username already exists" });
     }
     let hashedPassword = bcrypt.hashSync(hash_password, 7);
     admin = await Admin.create({
@@ -33,6 +33,43 @@ const createAdmin = async (req, res) => {
     return res.send({
       status: 201,
       message: "admin successfully created",
+      access_token,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const registrateAdmin = async (req, res) => {
+  try {
+    let { fullname, password, username, role_id } = req.body;
+    let admin = await Admin.findOne({ where: { username: username } });
+
+    if (admin) {
+      return res.send({ message: "this username already taken" });
+    }
+    let hashedPassword = bcrypt.hashSync(password, 7);
+    admin = await Admin.create({
+      fullname,
+      username,
+      hash_password: hashedPassword,
+      is_active: true,
+      role_id,
+    });
+    const payload = {
+      role: admin.role_id,
+      username: admin.username,
+      id: admin.id,
+    };
+    const access_token = jwt.generateTokens(payload);
+    await admin.save();
+    res.cookie("access_token", access_token, {
+      maxAge: config.get("cookie_time"),
+      httpOnly: true,
+    });
+    return res.send({
+      status: 201,
+      message: "Successful registration!",
       access_token,
     });
   } catch (error) {
@@ -125,6 +162,7 @@ const editAdmin = async (req, res) => {
 
 module.exports = {
   createAdmin,
+  registrateAdmin,
   getAllAdmin,
   getAdmin,
   loginAdmin,
